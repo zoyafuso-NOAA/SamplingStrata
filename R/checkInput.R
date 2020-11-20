@@ -50,12 +50,12 @@ checkInput <- function (errors = NULL, strata = NULL, sampframe = NULL)
     colnames(sampframe) <- toupper(colnames(sampframe))
     if (sum(grepl("X", colnames(sampframe))) < 1) 
       stop("In frame dataframe the indication of at least one auxiliary variable (X) is missing")
-    if (sum(grepl("Y", colnames(sampframe))) < 1) 
+    if (sum(grepl("_SQ_SUM", colnames(sampframe))) < 1) 
       stop("In frame dataframe the indication of at least one target variable (Y) is missing")
     if (sum(grepl("DOMAINVALUE", colnames(sampframe))) < 
         1) 
       stop("In frame dataframe the indication of the domain (DOMAINVALUE) is missing")
-    for (i in (1:(sum(grepl("Y", colnames(sampframe)))))) {
+    for (i in (1:(sum(grepl("_SQ_SUM", colnames(sampframe)))))) {
       stmt <- paste("if (min(sampframe$Y",i,") < 0) stop('Variable Y",i," has negative values in sampframe')",sep="")
       eval(parse(text=stmt))
     }
